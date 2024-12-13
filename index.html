@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试 SOP</title>
+    <!-- 添加 PWA 支持 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6c5ce7">
+    <link rel="apple-touch-icon" href="icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3436;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f6fa;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 400px;
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+            min-height: calc(100vh - 40px);
+        }
+
+        .detail-panel {
+            width: 100%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .detail-panel:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .detail-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .detail-panel::-webkit-scrollbar-track {
+            background: #f0f2f5;
+        }
+
+        .detail-panel::-webkit-scrollbar-thumb {
+            background-color: #3498db;
+            border-radius: 3px;
+        }
+
+        .detail-panel h2 {
+            font-size: 1.5em;
+            color: #6c5ce7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            position: relative;
+            text-align: center;
+            border-bottom: 2px solid #a29bfe;
+        }
+
+        .detail-panel h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            border-radius: 2px;
+        }
+
+        .detail-panel h3 {
+            font-size: 1.3em;
+            color: #34495e;
+            margin: 15px 0;
+            padding-left: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-panel h3:before {
+            content: '📌';
+        }
+
+        .detail-content {
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(52, 152, 219, 0.1);
+        }
+
+        .detail-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .resource-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            padding: 10px 15px;
+            background: #f5f3fe;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .resource-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.15);
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .resource-link:before {
+            content: '🔗';
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: auto;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .tip-box, .warning-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
+        }
+
+        .tip-box:hover, .warning-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .tip-box h4:before {
+            content: '';
+            margin-right: 8px;
+        }
+
+        .warning-box h4:before {
+            content: '⚠️';
+            margin-right: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6c5ce7;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 600;
+            position: relative;
+        }
+
+        h1:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #6c5ce7, #a29bfe);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .todo-list {
+            list-style: none;
+        }
+
+        .todo-item {
+            background: linear-gradient(to right, #fff, #fafaff);
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .todo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.1);
+        }
+
+        .todo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .todo-header:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .todo-checkbox, .subtask input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            appearance: none;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .todo-checkbox:checked, .subtask input[type="checkbox"]:checked {
+            background: #3498db;
+            transform: scale(1.05);
+        }
+
+        .todo-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            flex-grow: 1;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .todo-title:before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        .todo-content {
+            margin-left: 30px;
+            display: none;
+        }
+
+        .todo-item.active .todo-content {
+            display: block;
+        }
+
+        .subtask {
+            margin: 10px 0;
+            padding: 12px;
+            background: #fff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #eee;
+            transition: all 0.2s ease;
+        }
+
+        .subtask:hover {
+            background: #f8f9fa;
+            border-color: #3498db;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            margin-top: 15px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #3498db;
+            border-radius: 3px;
+            width: 0;
+            transition: width 0.5s ease;
+            background-image: linear-gradient(45deg, 
+                rgba(255,255,255,.15) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255,255,255,.15) 50%, 
+                rgba(255,255,255,.15) 75%, 
+                transparent 75%, 
+                transparent);
+            background-size: 1rem 1rem;
+            animation: progress-bar-stripes 1s linear infinite,
+                      progress-fill 0.5s ease;
+        }
+
+        @keyframes progress-bar-stripes {
+            0% { background-position: 1rem 0; }
+            100% { background-position: 0 0; }
+        }
+
+        @keyframes progress-fill {
+            from { width: 0; }
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .notes {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .resource-list {
+            margin: 10px 0;
+        }
+
+        .example-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .example-box h4 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .example-box h4:before {
+            content: '📝';
+            margin-right: 8px;
+        }
+
+        /* 添加平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 添加任务完成动画 */
+        @keyframes taskComplete {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .subtask.completed {
+            animation: taskComplete 0.3s ease;
+            background: #f8f9fa;
+            border-color: #3498db;
+            opacity: 0.8;
+        }
+
+        /* 优化列表样式 */
+        .detail-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .detail-content ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .detail-content ul li:before {
+            content: '•';
+            color: #3498db;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* 默认只显示第一个步骤的详情 */
+        #step1-detail {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 添加分隔线 */
+        .detail-content > div:not(:last-child) {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .detail-content > div:not(:last-child):after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, 
+                rgba(52, 152, 219, 0.1), 
+                rgba(52, 152, 219, 0.2), 
+                rgba(52, 152, 219, 0.1));
+        }
+
+        /* 圆环进度条样式 */
+        .progress-circle-container {
+            width: 100%;
+            background: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            position: relative;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 4px rgba(52, 152, 219, 0.2));
+        }
+
+        .progress-circle-bg {
+            fill: none;
+            stroke: #eee;
+            stroke-width: 6;
+            opacity: 0.2;
+        }
+
+        .progress-circle-value {
+            fill: none;
+            stroke: url(#rainbow);
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.2));
+            transform-origin: center;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .progress-label {
+            margin-top: 10px;
+            color: #34495e;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* 添加渐变效果 */
+        .progress-circle-container svg {
+            overflow: visible;
+        }
+
+        /* 左侧栏样式 */
+        .left-panel {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .left-panel h2 {
+            font-size: 1.3em;
+            color: #6c5ce7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a29bfe;
+        }
+
+        /* 使用说明样式 */
+        .instructions {
+            margin-top: 30px;
+        }
+
+        .instruction-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+        }
+
+        .instruction-item h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .instruction-item p {
+            color: #34495e;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* 添加庆祝动画相关样式 */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .celebration.active {
+            display: block;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: firework 1s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+                box-shadow: 
+                    0 0 0 0 #6c5ce7,
+                    0 0 0 0 #a29bfe,
+                    0 0 0 0 #74b9ff,
+                    0 0 0 0 #81ecec;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+                box-shadow: 
+                    -50px -50px 0 0 #6c5ce7,
+                    50px -50px 0 0 #a29bfe,
+                    50px 50px 0 0 #74b9ff,
+                    -50px 50px 0 0 #81ecec;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti 3s ease-in-out infinite;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 添加彩虹旋转动画 */
+        @keyframes rainbow-rotate {
+            from {
+                filter: hue-rotate(0deg);
+            }
+            to {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        /* 统一左右栏样式 */
+        .left-panel, .detail-panel {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        /* 统一标题样式 */
+        .left-panel h2, .detail-panel h2 {
+            font-size: 1.3em;
+            color: #6c5ce7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a29bfe;
+            text-align: center;
+        }
+
+        /* 统一卡片样式 */
+        .instruction-item, .tip-box, .warning-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .instruction-item:hover, .tip-box:hover, .warning-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.08);
+        }
+
+        /* 统一标题前缀图标 */
+        .instruction-item h4:before,
+        .tip-box h4:before,
+        .warning-box h4:before {
+            margin-right: 8px;
+        }
+
+        /* 统一滚动条样式 */
+        .left-panel::-webkit-scrollbar,
+        .detail-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .left-panel::-webkit-scrollbar-track,
+        .detail-panel::-webkit-scrollbar-track {
+            background: #f5f6fa;
+        }
+
+        .left-panel::-webkit-scrollbar-thumb,
+        .detail-panel::-webkit-scrollbar-thumb {
+            background-color: #6c5ce7;
+            border-radius: 3px;
+        }
+
+        /* 统一文本样式 */
+        .instruction-item p,
+        .tip-box li,
+        .warning-box li {
+            color: #2d3436;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* 统一hover效果 */
+        .left-panel:hover,
+        .detail-panel:hover {
+            box-shadow: 0 6px 24px rgba(108, 92, 231, 0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="celebration">
+        <!-- 烟花和彩带会通过JavaScript动态添加 -->
+    </div>
+
+    <div class="container">
+        <div class="left-panel">
+            <h2>准备进度</h2>
+            <div class="progress-circle-container">
+                <svg class="progress-circle" viewBox="0 0 36 36">
+                    <defs>
+                        <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#6c5ce7;stop-opacity:1" />
+                            <stop offset="20%" style="stop-color:#a29bfe;stop-opacity:1" />
+                            <stop offset="40%" style="stop-color:#74b9ff;stop-opacity:1" />
+                            <stop offset="60%" style="stop-color:#81ecec;stop-opacity:1" />
+                            <stop offset="80%" style="stop-color:#55efc4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00b894;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path class="progress-circle-bg"
+                        d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path class="progress-circle-value"
+                        d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                </svg>
+                <div class="progress-text">0%</div>
+                <div class="progress-label">总体完成进度</div>
+            </div>
+            
+            <div class="instructions">
+                <h2>使用说明</h2>
+                <div class="instruction-item">
+                    <h4>如何使用</h4>
+                    <p>点击侧步骤查看详细说明，完成子任务后勾选对应复选框。</p>
+                </div>
+                <div class="instruction-item">
+                    <h4>进度保存</h4>
+                    <p>所有进度会自动保存在本地，可以随时继续完成。</p>
+                </div>
+                <div class="instruction-item">
+                    <h4>完成标准</h4>
+                    <p>每个步骤都完成后，确保理解和掌握相关内容。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h1>面试 SOP</h1>
+            <ul class="todo-list">
+                <!-- 第1步：反向背调 -->
+                <li class="todo-item" data-step="1">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第1步：反向背调</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>查询工商信息（企查查/天眼查）</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>检查经营异常（国家企业信用公示系统）</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>查看企业年报</span>
+                        </div>
+                        <div class="notes">
+                            注意事项：
+                            - 成立时间少于6个月要谨慎
+                            - 实缴资本少于50万要谨慎
+                            - 参保人数为0的不要去
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第2步：研究岗位JD -->
+                <li class="todo-item" data-step="2">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第2步：研究岗位JD</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>分析岗位职责要求</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>整理技能要求清单</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>评估薪资范围</span>
+                        </div>
+                        <div class="notes">
+                            重点关注：
+                            - 工作量评估
+                            - 技能匹配度
+                            - 发展空间
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第3步：看行业研究 -->
+                <li class="todo-item" data-step="3">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第3步：行业研究</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>阅读行业研究报告</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>分析市场竞争格局</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>研究发展趋势</span>
+                        </div>
+                        <div class="notes">
+                            重点关注：
+                            - 行业发展趋势
+                            - 市场规模增长率
+                            - 主要竞争对手分析
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第4步：准备自我介绍 -->
+                <li class="todo-item" data-step="4">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第4步：准备自我介绍</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备HR面试版本</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备业务面试版本</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备个人亮点故事</span>
+                        </div>
+                        <div class="notes">
+                            注意事项：
+                            - 突出与岗位的匹配度
+                            - 准备2-3个成功案例
+                            - 控制时长在3分钟内
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第5步：整理面试问题 -->
+                <li class="todo-item" data-step="5">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第5步：整理面试问题</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备常见问题答案</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备专业技能问题</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备反问面试官的问题</span>
+                        </div>
+                        <div class="notes">
+                            常见问题：
+                            - 为什么选择我们公司
+                            - 未来的职业规划
+                            - 最大的优缺点是什么
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第6步：项目经历 -->
+                <li class="todo-item" data-step="6">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第6步：项目经历</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>整理项目背景和目标</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备项目难点和解决方案</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>准备项目成果和数据</span>
+                        </div>
+                        <div class="notes">
+                            STAR则：
+                            - Situation: 项目背景
+                            - Task: 任务目标
+                            - Action: 具体行动
+                            - Result: 最终结果
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- 第7步：模拟面试 -->
+                <li class="todo-item" data-step="7">
+                    <div class="todo-header" onclick="toggleContent(this)">
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleStep(this)">
+                        <span class="todo-title">第7步：模拟面试</span>
+                    </div>
+                    <div class="todo-content">
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>找人进行模拟面试</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>录制自我介绍视频</span>
+                        </div>
+                        <div class="subtask">
+                            <input type="checkbox" onchange="updateProgress(this.parentElement.parentElement)">
+                            <span>练习常见问题回答</span>
+                        </div>
+                        <div class="notes">
+                            注意事项：
+                            - 注意肢体语言
+                            - 控制语速和音量
+                            - 保持眼神交流
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="detail-panel">
+            <h2>详细说明</h2>
+            <!-- 第1步详情 -->
+            <div class="detail-content" id="step1-detail">
+                <h3>背调要点</h3>
+                <div class="tip-box">
+                    <h4>背调工具推荐：</h4>
+                    <ul>
+                        <li>
+                            <a href="https://www.qcc.com/" target="_blank" class="resource-link">企查查<span class="tag">工商信息</span></a>
+                            <a href="https://www.tianyancha.com/" target="_blank" class="resource-link">天眼查<span class="tag">企业信用</span></a>
+                        </li>
+                        <li>
+                            <a href="https://maimai.cn/" target="_blank" class="resource-link">脉脉<span class="tag">职场社区</span></a>
+                            <a href="https://www.kanzhun.com/" target="_blank" class="resource-link">看准网<span class="tag">公司评价</span></a>
+                        </li>
+                        <li>
+                            <a href="https://36kr.com/" target="_blank" class="resource-link">36氪<span class="tag">创投资讯</span></a>
+                            <a href="https://www.huxiu.com/" target="_blank" class="resource-link">虎嗅<span class="tag">行业分析</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h4>重点关注：</h4>
+                    <ul>
+                        <li>公司发展阶段：融资情况、团队规模</li>
+                        <li>业务增长情况：营收、用户数据</li>
+                        <li>团队氛围：离职率、加班情况</li>
+                        <li>发展空间：晋升机制、培训体系</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第2步详情 -->
+            <div class="detail-content" id="step2-detail">
+                <h3>岗位分析要点</h3>
+                <div class="tip-box">
+                    <h4>岗位价值评价：</h4>
+                    <ul>
+                        <li>岗位级别：初级、中级、高级、专家</li>
+                        <li>发展路径：专业路线、管理路线</li>
+                        <li>核心职责：关键KPI、考核标准</li>
+                        <li>技能要求：必备技能、加分项</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h4>薪酬结构分析：</h4>
+                    <ul>
+                        <li>基本工资：行业水平对比</li>
+                        <li>绩效奖金：考核方式、发放周期</li>
+                        <li>股权激励：期权、股票</li>
+                        <li>福利待遇：五险一金、补贴等</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第3步详情 -->
+            <div class="detail-content" id="step3-detail">
+                <h3>行业分析</h3>
+                <div class="warning-box">
+                    <h4>研究资源：</h4>
+                    <div class="resource-group">
+                        <a href="https://www.iresearch.com.cn/" target="_blank" class="resource-link">
+                            艾瑞咨询
+                            <span class="tag">研究报告</span>
+                        </a>
+                        <a href="https://www.analysys.cn/" target="_blank" class="resource-link">
+                            易观智库
+                            <span class="tag">数据分析</span>
+                        </a>
+                        <a href="https://www.mckinsey.com.cn/insights/" target="_blank" class="resource-link">
+                            麦肯锡
+                            <span class="tag">行业洞察</span>
+                        </a>
+                        <a href="https://www.pwccn.com/zh/research-and-insights.html" target="_blank" class="resource-link">
+                            普华永道研究
+                            <span class="tag">行业洞察</span>
+                        </a>
+                        <a href="https://www2.deloitte.com/cn/zh/industries.html" target="_blank" class="resource-link">
+                            德勤行业洞察
+                            <span class="tag">趋势报告</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <h4>行业趋势：</h4>
+                    <ul>
+                        <li>市场规模：增长率、市场容量</li>
+                        <li>竞争格局：主要玩家、市场份额</li>
+                        <li>技术变革：新技术、新模式</li>
+                        <li>政策环境：监管政策、扶持政策</li>
+                    </ul>
+                </div>
+                <div class="tip-box">
+                    <h4>公司定位：</h4>
+                    <ul>
+                        <li>商业模式：盈利点、成本结构</li>
+                        <li>核心优势：技术、用户、渠道</li>
+                        <li>发展战略：短期目标、长期规划</li>
+                        <li>竞争策略：差异定位</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第4步详情 -->
+            <div class="detail-content" id="step4-detail">
+                <h3>自我介绍准备</h3>
+                <div class="example-box">
+                    <h4>结构设计：</h4>
+                    <ul>
+                        <li>开场：姓名、学历背景（10秒）</li>
+                        <li>经历：工作经验、核心成就（30秒）</li>
+                        <li>能力：专业技能、个人特长（30秒）</li>
+                        <li>期望：求职目标���职业规划（20秒）</li>
+                    </ul>
+                </div>
+                <div class="tip-box">
+                    <h4>准备要点：</h4>
+                    <ul>
+                        <li>时长控制：90秒最佳，不超过2分钟</li>
+                        <li>重点突出：与岗位的匹配度</li>
+                        <li>数据支撑：用具体数字说话</li>
+                        <li>逻辑清晰：时间顺序或重要性</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第5步详情 -->
+            <div class="detail-content" id="step5-detail">
+                <h3>面试问题准备</h3>
+                <div class="example-box">
+                    <h4>问题分类：</h4>
+                    <ul>
+                        <li>个人背景类：学习和工作经历</li>
+                        <li>专业能力类：技术栈和项目经验</li>
+                        <li>性格特征类：优缺点和处事方式</li>
+                        <li>职业规划类：发展目标和期望</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h4>回答技巧：</h4>
+                    <ul>
+                        <li>STAR法则：情境、任务、行动、结果</li>
+                        <li>FAB法则：特征、优势、收益</li>
+                        <li>5W2H分析：What、Why、Who、When、Where、How、How much</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第6步详情 -->
+            <div class="detail-content" id="step6-detail">
+                <h3>项目经历准备</h3>
+                <div class="tip-box">
+                    <h4>项目要素：</h4>
+                    <ul>
+                        <li>项目背景：业务痛点、市场需求</li>
+                        <li>解决方案：技术选型、实现思路</li>
+                        <li>个人职责：分工、贡献度</li>
+                        <li>项目成果：数据、收益反馈</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <h4>亮点提炼：</h4>
+                    <ul>
+                        <li>技术创新：新技术应用、效率提升</li>
+                        <li>业务价值：收入增长、成本降低</li>
+                        <li>团队协作：跨部门合作、资源整合</li>
+                        <li>问题解决：难点突破、风险管控</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第7步详情 -->
+            <div class="detail-content" id="step7-detail">
+                <h3>模拟面试准备</h3>
+                <div class="tip-box">
+                    <h4>准备清单：</h4>
+                    <ul>
+                        <li>着装：商务正装为主</li>
+                        <li>材料：简历、作品集、证书</li>
+                        <li>工具：笔记本、签字笔</li>
+                        <li>时间：提前20分钟到达</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h4>注意事项：</h4>
+                    <ul>
+                        <li>仪容整洁：着装、妆容得体</li>
+                        <li>肢体语言：坐姿端正、眼神交流</li>
+                        <li>语言表达：语速适中、声音清晰</li>
+                        <li>礼仪细节：关机、敲门、道谢</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 保存进度本地存储
+        function saveProgress() {
+            const todoItems = document.querySelectorAll('.todo-item');
+            const progress = {};
+            
+            todoItems.forEach((item, index) => {
+                const subtasks = item.querySelectorAll('.subtask input');
+                progress[index] = Array.from(subtasks).map(checkbox => checkbox.checked);
+            });
+            
+            localStorage.setItem('interviewProgress', JSON.stringify(progress));
+        }
+
+        // 加载保存的进度
+        function loadProgress() {
+            const saved = localStorage.getItem('interviewProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                Object.keys(progress).forEach(index => {
+                    const todoItem = document.querySelectorAll('.todo-item')[index];
+                    const subtasks = todoItem.querySelectorAll('.subtask input');
+                    progress[index].forEach((checked, i) => {
+                        subtasks[i].checked = false; // 确保默认不选中
+                        if (checked) {
+                            subtasks[i].parentElement.classList.remove('completed');
+                        }
+                    });
+                    updateProgress(todoItem.querySelector('.todo-content'));
+                });
+            }
+        }
+
+        function showStepDetail(step) {
+            // 隐藏所有详情面板
+            document.querySelectorAll('.detail-content').forEach(panel => {
+                panel.classList.remove('active');
+                panel.style.display = 'none';
+                panel.style.opacity = '0';
+                panel.style.transform = 'translateY(10px)';
+            });
+            
+            // 显示对应步骤的详情面板
+            const detailPanel = document.getElementById(`step${step}-detail`);
+            if (detailPanel) {
+                detailPanel.classList.add('active');
+                detailPanel.style.display = 'block';
+                // 使用 setTimeout 确保 display:block 生效后再添加动画
+                setTimeout(() => {
+                    detailPanel.style.opacity = '1';
+                    detailPanel.style.transform = 'translateY(0)';
+                }, 50);
+            }
+        }
+
+        function toggleContent(header) {
+            const todoItem = header.closest('.todo-item');
+            const stepNumber = todoItem.getAttribute('data-step');
+            
+            // 关闭其他打开的项目
+            document.querySelectorAll('.todo-item.active').forEach(item => {
+                if (item !== todoItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // 切换内容显示
+            todoItem.classList.toggle('active');
+            
+            // 显示右侧详情
+            showStepDetail(stepNumber);
+        }
+
+        function toggleStep(checkbox) {
+            const todoItem = checkbox.closest('.todo-item');
+            const stepNumber = todoItem.getAttribute('data-step');
+            if (checkbox.checked) {
+                todoItem.classList.add('active');
+                showStepDetail(stepNumber);
+            } else {
+                todoItem.classList.remove('active');
+            }
+        }
+
+        function updateProgress(todoContent) {
+            const todoItem = todoContent.closest('.todo-item');
+            const mainCheckbox = todoItem.querySelector('.todo-checkbox');
+            const subtaskCheckboxes = todoContent.querySelectorAll('.subtask input[type="checkbox"]');
+            
+            // 检查是否所有子任务都完成
+            const allChecked = Array.from(subtaskCheckboxes).every(checkbox => checkbox.checked);
+            mainCheckbox.checked = allChecked;
+            
+            saveProgress();
+            updateTotalProgress();
+        }
+
+        function updateTotalProgress() {
+            const allSubtasks = document.querySelectorAll('.subtask input[type="checkbox"]');
+            const completedSubtasks = document.querySelectorAll('.subtask input[type="checkbox"]:checked');
+            
+            const totalPercentage = (completedSubtasks.length / allSubtasks.length) * 100;
+            const formattedPercentage = Math.round(totalPercentage);
+            
+            const progressCircle = document.querySelector('.progress-circle-value');
+            const progressText = document.querySelector('.progress-text');
+            
+            const circumference = 2 * Math.PI * 15.9155;
+            const offset = circumference - (formattedPercentage / 100) * circumference;
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            progressCircle.style.strokeDashoffset = offset;
+            progressText.textContent = `${formattedPercentage}%`;
+            
+            // 检查是否全部完成
+            if (formattedPercentage === 100) {
+                celebrate();
+            }
+        }
+
+        function celebrate() {
+            const celebration = document.querySelector('.celebration');
+            celebration.classList.add('active');
+
+            // 创建烟花效果
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = Math.random() * window.innerWidth + 'px';
+                    firework.style.top = Math.random() * window.innerHeight + 'px';
+                    celebration.appendChild(firework);
+
+                    // 移除动画完成的元素
+                    setTimeout(() => firework.remove(), 1000);
+                }, i * 300);
+            }
+
+            // 创建彩带效果
+            const colors = ['#6c5ce7', '#a29bfe', '#74b9ff', '#81ecec', '#55efc4'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                celebration.appendChild(confetti);
+
+                // 移除动画完成的元素
+                setTimeout(() => confetti.remove(), 3000);
+            }
+
+            // 3秒后隐藏庆祝效果
+            setTimeout(() => {
+                celebration.classList.remove('active');
+                celebration.innerHTML = '';
+            }, 3000);
+        }
+
+        // 页面加载时恢复进度
+        document.addEventListener('DOMContentLoaded', loadProgress);
+
+        // 添加滚动到视图功能
+        function scrollIntoViewIfNeeded(element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // 页面加载时显示第一个步骤的详情
+        document.addEventListener('DOMContentLoaded', function() {
+            showStepDetail(1);
+            updateTotalProgress();
+        });
+    </script>
+</body>
+</html> 
